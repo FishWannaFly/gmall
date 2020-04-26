@@ -1,9 +1,13 @@
 package com.atguigu.gmall.pms.service.impl;
 
+import com.atguigu.gmall.pms.entity.CategoryVo;
+import com.atguigu.gmall.pms.entity.ThreeCategoryVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -36,6 +40,29 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         }
         List<CategoryEntity> categoryEntities = baseMapper.selectList(wrapper);
         return categoryEntities;
+    }
+
+    @Override
+    public List<CategoryVo> getChildren(Long parentId) {
+        return baseMapper.getChildren(parentId);
+    }
+
+    @Override
+    public List<ThreeCategoryVo> getThreeCate(Long cId) {
+        CategoryEntity categoryEntity3 = baseMapper.selectById(cId);
+        CategoryEntity categoryEntity2 = baseMapper.selectOne(new QueryWrapper<CategoryEntity>().eq("id", categoryEntity3.getParentId()));
+        CategoryEntity categoryEntity1 = baseMapper.selectOne(new QueryWrapper<CategoryEntity>().eq("id", categoryEntity2.getParentId()));
+        ArrayList<ThreeCategoryVo> threeCategoryVos = new ArrayList<>();
+        ThreeCategoryVo one = new ThreeCategoryVo();
+        ThreeCategoryVo two = new ThreeCategoryVo();
+        ThreeCategoryVo three = new ThreeCategoryVo();
+        BeanUtils.copyProperties(categoryEntity3,three);
+        BeanUtils.copyProperties(categoryEntity2,two);
+        BeanUtils.copyProperties(categoryEntity1,one);
+        threeCategoryVos.add(one);
+        threeCategoryVos.add(two);
+        threeCategoryVos.add(three);
+        return threeCategoryVos;
     }
 
 }

@@ -2,6 +2,8 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.entity.CategoryVo;
+import com.atguigu.gmall.pms.entity.ThreeCategoryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gmall.pms.entity.CategoryEntity;
@@ -34,12 +35,26 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/getThreeCate/{cId}")
+    public ResponseVo<List<ThreeCategoryVo>> getThreeCate(@PathVariable Long cId){
+        List<ThreeCategoryVo> list = categoryService.getThreeCate(cId);
+        return ResponseVo.ok(list);
+    }
+
 
     @GetMapping("/parent/{parentId}")
-    public ResponseVo<Object> getParent(@PathVariable Long parentId){
+    public ResponseVo<List<CategoryEntity>> getParent(@PathVariable Long parentId){
         List<CategoryEntity> list = categoryService.getParent(parentId);
         return ResponseVo.ok(list);
     }
+
+    @GetMapping("/children/{parentId}")
+    public ResponseVo<List<CategoryVo>> getChildren(@PathVariable Long parentId){
+        List<CategoryVo> list = categoryService.getChildren(parentId);
+        return ResponseVo.ok(list);
+    }
+
+
     /**
      * 列表
      */

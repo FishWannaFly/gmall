@@ -34,6 +34,32 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("query")
+    public ResponseVo<UserEntity> queryUserEntity(@RequestParam("username")String username,
+                                        @RequestParam("password")String password){
+        UserEntity userEntity= userService.queryUserEntity(username,password);
+        return ResponseVo.ok(userEntity);
+    }
+
+    @GetMapping("getCode/{phone}")
+    public ResponseVo<Object> getCode(@PathVariable String phone){
+        userService.getCode(phone);
+        return ResponseVo.ok();
+    }
+
+    @PostMapping("register")
+    public ResponseVo<Object> register(UserEntity userEntity,@RequestParam("code") String code){
+        userService.register(userEntity,code);
+        return ResponseVo.ok();
+    }
+
+    @GetMapping("check/{data}/{type}")
+    public ResponseVo<Boolean> checkData(@PathVariable("data") String data,
+                                         @PathVariable("type") Integer type){
+        Boolean b = userService.checkData(data,type);
+        return ResponseVo.ok(b);
+    }
+
     /**
      * 列表
      */

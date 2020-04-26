@@ -15,6 +15,8 @@ spring:
           uri: lb://pms-service
           predicates:
             - Path=/pms/**
+#          filters:
+#            - Auth
         - id: sms-route
           uri: lb://sms-service
           predicates:
@@ -27,3 +29,25 @@ spring:
           uri: lb://wms-service
           predicates:
             - Path=/wms/**
+        - id: search-route
+          uri: lb://search-service
+          predicates:
+            - Path=/search/**
+        - id: index-route
+          uri: lb://index-service
+          predicates:
+            - Path=/index/**
+        - id: auth-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+        - id: cart-route
+          uri: lb://cart-service
+          predicates:
+            - Path=/cart/**
+        - id: order-route
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+#      x-forwarded:
+#        host-enabled: true

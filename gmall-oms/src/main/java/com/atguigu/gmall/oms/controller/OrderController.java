@@ -2,6 +2,8 @@ package com.atguigu.gmall.oms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.oms.entity.OrderItem;
+import com.atguigu.gmall.oms.vo.OrderSubmitVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +64,10 @@ public class OrderController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody OrderEntity order){
-		orderService.save(order);
+    public ResponseVo<OrderEntity> save(@RequestBody OrderSubmitVo orderSubmitVo){
+        OrderEntity orderEntity = orderService.saveOrderSubmitVo(orderSubmitVo);
 
-        return ResponseVo.ok();
+        return ResponseVo.ok(orderEntity);
     }
 
     /**

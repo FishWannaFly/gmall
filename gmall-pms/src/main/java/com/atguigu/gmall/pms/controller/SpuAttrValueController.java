@@ -2,16 +2,11 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
 import com.atguigu.gmall.pms.service.SpuAttrValueService;
@@ -33,6 +28,12 @@ public class SpuAttrValueController {
 
     @Autowired
     private SpuAttrValueService spuAttrValueService;
+
+    @GetMapping("getAttrListByIds")
+    public ResponseVo<List<SpuAttrValueEntity>> getAttrListByIds(@RequestParam List<Long> ids,@RequestParam Long spuId){
+        List<SpuAttrValueEntity> list = spuAttrValueService.list(new QueryWrapper<SpuAttrValueEntity>().eq("spu_id", spuId).in("attr_id", ids));
+        return ResponseVo.ok(list);
+    }
 
     /**
      * 列表

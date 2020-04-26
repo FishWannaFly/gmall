@@ -1,6 +1,6 @@
 package com.atguigu.gmall.sms.mapper;
 
-import com.atguigu.gmall.sms.entity.HomeSubjectEntity;
+import com.atguigu.gmall.sms.api.entity.HomeSubjectEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

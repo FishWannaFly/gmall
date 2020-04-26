@@ -22,6 +22,14 @@ spring:
     transport:
       dashboard: localhost:8080
       port: 8719
+  rabbitmq:
+    host: 192.168.17.131
+    virtual-host: /yxl
+    username: yxl
+    password: yxl
+    publisher-returns: true
+    publisher-confirm-type: correlated
+
 feign:
   sentinel:
     enabled: true
@@ -29,4 +37,5 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-#  type-aliases-package: com.atguigu.gmall.pms.entity
+  type-aliases-package: com.atguigu.gmall.pms.entity
+  mapper-locations: classpath:mapper/pms/**/*.xml

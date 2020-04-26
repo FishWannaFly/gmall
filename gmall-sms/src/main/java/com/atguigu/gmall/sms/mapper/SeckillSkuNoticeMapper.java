@@ -1,6 +1,6 @@
 package com.atguigu.gmall.sms.mapper;
 
-import com.atguigu.gmall.sms.entity.SeckillSkuNoticeEntity;
+import com.atguigu.gmall.sms.api.entity.SeckillSkuNoticeEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -2,16 +2,13 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.entity.SkuSaleAttrVo;
+import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
 import com.atguigu.gmall.pms.service.SkuAttrValueService;
@@ -33,6 +30,23 @@ public class SkuAttrValueController {
 
     @Autowired
     private SkuAttrValueService skuAttrValueService;
+    @GetMapping("getSkuAttrValueBySkuId/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> getSkuAttrValueBySkuId(@PathVariable Long skuId){
+        List<SkuAttrValueEntity> skuAttrValueEntities = skuAttrValueService.list(new QueryWrapper<SkuAttrValueEntity>().eq("sku_id", skuId));
+        return ResponseVo.ok(skuAttrValueEntities);
+    }
+
+    @GetMapping("getSkuSaleAttrVoList/{spuId}")
+    public ResponseVo<List<SkuSaleAttrVo>> getSkuSaleAttrVoList(@PathVariable Long spuId){
+        List<SkuSaleAttrVo> list = skuAttrValueService.getSkuSaleAttrVoList(spuId);
+        return ResponseVo.ok(list);
+    }
+
+    @GetMapping("getAttrListByIds")
+    public ResponseVo<List<SkuAttrValueEntity>> getAttrListByIds(@RequestParam List<Long> ids, @RequestParam Long skuId){
+        List<SkuAttrValueEntity> list = skuAttrValueService.list(new QueryWrapper<SkuAttrValueEntity>().eq("sku_id", skuId).in("attr_id", ids));
+        return ResponseVo.ok(list);
+    }
 
     /**
      * 列表

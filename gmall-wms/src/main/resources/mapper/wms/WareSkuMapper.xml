@@ -2,5 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.atguigu.gmall.wms.mapper.WareSkuMapper">
-
+<!--    List<WareSkuEntity> ableWareSku(Long skuId, Integer count);-->
+    <select id="ableWareSku" resultType="com.atguigu.gmall.wms.entity.WareSkuEntity">
+        select *
+        from wms_ware_sku
+        where sku_id=#{skuId} and stock-stock_locked-#{count}>0
+    </select>
+<!--    int lockWare(@Param("id") Long id, @Param("count") Integer count);-->
+    <update id="lockWare">
+        update wms_ware_sku set stock_locked=stock_locked+#{count} where id=#{id}
+    </update>
+<!--    void unlockWare(Long wareSkuId, Integer count);-->
+    <update id="unlockWare">
+        update wms_ware_sku set stock_locked=stock_locked-#{count} where id=#{id}
+    </update>
+<!--    void minusStore(@Param("id") Long id,@Param("count") Integer count);-->
+    <update id="minusStore">
+        update wms_ware_sku set stock=stock-#{count},stock_locked=stock_locked-#{count},sales=sales+#{count} where id=#{id}
+    </update>
 </mapper>

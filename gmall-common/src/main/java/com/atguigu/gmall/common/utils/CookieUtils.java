@@ -157,14 +157,16 @@ public final class CookieUtils {
 	private static final String getDomainName(HttpServletRequest request) {
 		String domainName = null;
 
-		String serverName = request.getRequestURL().toString();
+//		String serverName = request.getRequestURL().toString();
+		String serverName = request.getHeader("X-Forwarded-Host");
 		if (serverName == null || serverName.equals("")) {
 			domainName = "";
 		} else {
 			serverName = serverName.toLowerCase();
-			serverName = serverName.substring(7);
-			final int end = serverName.indexOf("/");
-			serverName = serverName.substring(0, end);
+			//此处截取7位是 截取 http://
+//			serverName = serverName.substring(7);
+//			final int end = serverName.indexOf("/");
+//			serverName = serverName.substring(0, end);
 			final String[] domains = serverName.split("\\.");
 			int len = domains.length;
 			if (len > 3) {
